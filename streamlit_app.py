@@ -1,10 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns 
-import numpy as np
 import datetime
-import dataframe_image as dfimg
 from datetime import datetime
 import altair as alt 
 import time
