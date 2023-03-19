@@ -41,7 +41,7 @@ def load_data(sheet_id, sheet_data):
     
     first_dict = {'190': [], '200 Plan': [],'300':[],'330':[],'250':[],'150':[],'130 plan':[],
               '4500 plan':[],'2500 plan':[],'1260 plan':[],'280 plan':[],'430 plan':[]}
-    start_hour = 7
+    start_hour = filtered_data['hour'].iloc[0]
     
     for hour in filtered_data['Timestamp'].dt.hour.unique():
         try:
@@ -158,7 +158,8 @@ def load_data(sheet_id, sheet_data):
     
     dict_to_dataframe=pd.DataFrame(first_dict)
     # generate a list of labels based on the number of rows
-    labels = [f'{i+6}-{i+7}' for i in range(len(dict_to_dataframe))]
+    labels = [f"{i+filtered_data['hour'].iloc[0]}-{i+(filtered_data['hour'].iloc[0]+1)}" for i in range(len(dict_to_dataframe))]
+
     # set the index to the custom labels
     dict_to_dataframe.set_index(pd.Index(labels), inplace=True)
     dict_to_dataframe.index.name = 'Timestamp'
@@ -202,7 +203,7 @@ def load_data_daywise(sheet_id, sheet_data,date):
     
     first_dict = {'190': [], '200 Plan': [],'300':[],'330':[],'250':[],'150':[],'130 plan':[],
               '4500 plan':[],'2500 plan':[],'1260 plan':[],'280 plan':[],'430 plan':[]}
-    start_hour = 6
+    start_hour = filtered_data['hour'].iloc[0]
     
     for hour in filtered_data['Timestamp'].dt.hour.unique():
         try:
@@ -319,7 +320,8 @@ def load_data_daywise(sheet_id, sheet_data,date):
     
     dict_to_dataframe=pd.DataFrame(first_dict)
     # generate a list of labels based on the number of rows
-    labels = [f'{i+6}-{i+7}' for i in range(len(dict_to_dataframe))]
+    labels = [f"{i+filtered_data['hour'].iloc[0]}-{i+(filtered_data['hour'].iloc[0]+1)}" for i in range(len(dict_to_dataframe))]
+
     # set the index to the custom labels
     dict_to_dataframe.set_index(pd.Index(labels), inplace=True)
     
@@ -361,7 +363,7 @@ def load_data_daywise1(sheet_id, sheet_data,date):
     filtered_data['hour'] = filtered_data['Timestamp'].dt.hour
     
     first_dict = {'Swappings': []}
-    start_hour = 6
+    start_hour = filtered_data['hour'].iloc[0]
     
     for hour in filtered_data['Timestamp'].dt.hour.unique():
         try:
@@ -381,7 +383,8 @@ def load_data_daywise1(sheet_id, sheet_data,date):
     
     dict_to_dataframe=pd.DataFrame(first_dict)
     # generate a list of labels based on the number of rows
-    labels = [f'{i+6}-{i+7}' for i in range(len(dict_to_dataframe))]
+    labels = [f"{i+filtered_data['hour'].iloc[0]}-{i+(filtered_data['hour'].iloc[0]+1)}" for i in range(len(dict_to_dataframe))]
+
     # set the index to the custom labels
     dict_to_dataframe.set_index(pd.Index(labels), inplace=True)
     
