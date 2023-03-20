@@ -480,7 +480,8 @@ def Getdataformistakes(date):
     start_date = pd.Timestamp(dt.date.today().replace(day=1))
     end_date = pd.Timestamp(dt.date.today())
     
-    filtered_data = data[data['Timestamp'].between(start_date, end_date)]
+    filtered_data = data.loc[pd.to_datetime(data['Timestamp']).dt.normalize().between(pd.Timestamp(start_date), pd.Timestamp(end_date))]
+
     
     filtered_data['date'] = filtered_data['Timestamp'].dt.date
     filtered_data['date'] = pd.to_datetime(filtered_data['date'])
