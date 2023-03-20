@@ -524,7 +524,7 @@ def Getdataformistakes(date):
 #                                 """Main function starts from here """ 
 
 def main():
-    page = st.sidebar.selectbox("Select a page", ["Hourly Data","Entry Mistakes", "Get Data Datewise"])
+    page = st.sidebar.selectbox("Select a page", ["Hourly Data","Entry Mistakes", "Swapping Distribution"])
     
     if page == "Hourly Data":
         # if st.sidebar.button("Load Hourly Data"):
@@ -551,7 +551,7 @@ def main():
     #         st.write(data)
 
     #         st.bar_chart(data)
-    elif page == "Get Data Datewise":
+    elif page == "Swapping Distribution":
         # st.title("Homepage")
         sheet_id = "1NikKhqY7u3AGsm9Fpk9UaqNFyzmyojuz8-iqUGh295g"
         sheet_data = "Form Responses 1"
