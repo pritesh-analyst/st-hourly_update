@@ -639,7 +639,7 @@ def main():
         
 
         st.write(Getdataformistakes(date))
-        st.write(dataframeformistakes(date))
+        st.write(Getdatafornamemistakes(date))
 
 
     
