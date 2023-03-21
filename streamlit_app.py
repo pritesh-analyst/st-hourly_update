@@ -458,16 +458,10 @@ def Getdataformistakes(date):
     df=df.iloc[:,:22].fillna('')
 
 
-    # df['Timestamp']=pd.to_datetime(df.Timestamp,dayfirst=True,errors='coerce')
-    # df['Timestamp'] = pd.to_datetime(df['Timestamp'])
-    # df['Timestamp'] = df['Timestamp'].dt.strftime('%m/%d/%Y')
-
-
     df['Battery In Voltage']=pd.to_numeric(df['Battery In Voltage'])
     df['Battery Out Voltage']=pd.to_numeric(df['Battery Out Voltage'])
     df['Amount ']=pd.to_numeric(df['Amount '])
-    # df['Security Amount']=pd.to_numeric(df['Security Amount'])
-    # df['Penalty Amount ']=pd.to_numeric(df['Penalty Amount '])
+
 
 
     data=pd.DataFrame({
@@ -520,6 +514,77 @@ def Getdataformistakes(date):
 
     
     return df_filtered
+
+def Getdatafornamemistakes(date):
+    import pandas as pd
+    import datetime as dt
+    from datetime import datetime
+    import time
+    sheet_id="1NikKhqY7u3AGsm9Fpk9UaqNFyzmyojuz8-iqUGh295g"
+    sheet_data="Form Responses 1"
+
+    gsheet_data = "https://docs.google.com/spreadsheets/d/{}/gviz/tq?tqx=out:csv&sheet={}".format(sheet_id, sheet_data)
+
+    url = gsheet_data.replace(" ","")
+    df=pd.read_csv(url, on_bad_lines='skip')
+    df=df.iloc[:,:22].fillna('')
+
+
+    df['Battery In Voltage']=pd.to_numeric(df['Battery In Voltage'])
+    df['Battery Out Voltage']=pd.to_numeric(df['Battery Out Voltage'])
+    df['Amount ']=pd.to_numeric(df['Amount '])
+
+
+
+    data=pd.DataFrame({
+                      'Timestamp':df['Timestamp'],'Customer name':df['Customer name'],'Battery_in':df['Battery In'],'Battery_in_volt':df['Battery In Voltage'],'Battery_out':df['Battery Out'],'Battery_Out_volt':df['Battery Out Voltage'],   
+                       'Amount':df['Amount '],'Security_amt':df['Security Amount'],'Penalty_amt':df['Penalty Amount '],'Supervisor':df['Shift supervisor'],'Plan':df['Is there any plan?'],
+                      'Battery_submit?':df['Is the customer submitting or collecting battery?'],'Center':df['Center']
+                       })
+   
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    start_date = pd.Timestamp(dt.date.today().replace(day=1))
+    end_date = pd.Timestamp(dt.date.today())
+    
+    filtered_data = data.loc[pd.to_datetime(data['Timestamp']).dt.normalize().between(pd.Timestamp(start_date), pd.Timestamp(end_date))]
+
+    
+    filtered_data['date'] = filtered_data['Timestamp'].dt.date
+    filtered_data['date'] = pd.to_datetime(filtered_data['date'])
+    
+    dict1 = {'Battery Out':[],'Customer 1':[],'Battery out time':[],'Supervisor when battery out':[],
+         'Battery In':[],'Customer 2':[],'Battery in time':[],'Supervisor when battery in':[]}
+
+    for i in range(filtered_data.shape[0]):
+        List1 = []
+        List1.append(filtered_data['Battery_out'].iloc[i])
+        List1.append(filtered_data['Customer name'].iloc[i])
+        for j in range(i+1,filtered_data.shape[0]):
+            if filtered_data['Battery_in'].iloc[j] == List1[0]:
+                if filtered_data['Customer name'].iloc[j]!= List1[1]:
+
+                    dict1['Battery Out'].append(List1[0])
+                    dict1['Customer 1'].append(List1[1])
+                    dict1['Battery out time'].append(filtered_data['Timestamp'].iloc[i])
+                    dict1['Supervisor when battery out'].append(filtered_data['Supervisor'].iloc[i])
+
+
+                    dict1['Battery in time'].append(filtered_data['Timestamp'].iloc[j])
+                    dict1['Supervisor when battery in'].append(filtered_data['Supervisor'].iloc[j])
+                    dict1['Battery In'].append(filtered_data['Battery_in'].iloc[j])
+                    dict1['Customer 2'].append(filtered_data['Customer name'].iloc[j])
+
+                    break
+                else:
+                    break
+
+    dataframeformistakes = pd.DataFrame(dict1)
+    
+    return dataframeformistakes
+    
+    
+    
+
 
 
 #                                 """Main function starts from here """ 
@@ -574,6 +639,7 @@ def main():
         
 
         st.write(Getdataformistakes(date))
+        st.write(dataframeformistakes(date))
 
 
     
