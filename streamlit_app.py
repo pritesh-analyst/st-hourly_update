@@ -579,8 +579,12 @@ def Getdatafornamemistakes(date):
                     break
 
     dataframeformistakes = pd.DataFrame(dict1)
-    
-    return dataframeformistakes
+    dataframeformistakes['Battery out time'] = pd.to_datetime(dataframeformistakes['Battery out time'])
+    dataframeformistakes['Battery in time'] = pd.to_datetime(dataframeformistakes['Battery in time'])
+
+    dataframeformistakes.sort_values(by='Battery in time',inplace=True)
+    df_filtered=(dataframeformistakes[dataframeformistakes['Battery in time'].dt.strftime('%Y-%m-%d') == date]).reset_index(drop=True)
+    return df_filtered
     
     
     
