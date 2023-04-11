@@ -629,8 +629,8 @@ def Getdataentries(date):
     df1["Timestamp"] = pd.to_datetime(df1["Timestamp"])
     df1['DATE'] = pd.to_datetime(df1['DATE'])
 
-    g4_swappings = print("Total G4 Swaappings :",data[ (data['Center'] == 'G4') & (data['Date'] == date)].shape[0])
-    laptop_entries = print("Total Laptop Entries :",df1.loc[(df1['DATE'] == date) & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].count())
+    g4_swappings = data[ (data['Center'] == 'G4') & (data['Date'] == date)].shape[0]
+    laptop_entries = df1.loc[(df1['DATE'] == date) & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].count()
     results = f"<p style='font-size: 24px;'>Total G4 Swappings: {g4_swappings}</p><br><p style='font-size: 24px;'>Total Laptop Entries: {laptop_entries}</p>"
     
         
