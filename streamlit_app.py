@@ -515,7 +515,7 @@ def Getdataformistakes(date):
     
     return df_filtered
 
-def Getdatafornamemistakes(date):
+def Getdatafornamemistakes():
     import pandas as pd
     import datetime as dt
     from datetime import datetime
@@ -629,8 +629,8 @@ def Getdata_laptop_entries(date):
     df1["Timestamp"] = pd.to_datetime(df1["Timestamp"])
     df1['DATE'] = pd.to_datetime(df1['DATE'])
 
-    g4_swappings = print("Total G4 Swaappings :",data[ (data['Center'] == 'G4') & (data['Date'] == date)].shape[0])
-    laptop_entries = print("Total Laptop Entries :",df1.loc[(df1['DATE'] == date) & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].count())
+    g4_swappings = print("Total G4 Swaappings :",data[ (data['Center'] == 'G4') & (data['Date'] == '2023-04-11')].shape[0])
+    laptop_entries = print("Total Laptop Entries :",df1.loc[(df1['DATE'] == '2023-04-11') & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].count())
 
     
         
@@ -650,7 +650,7 @@ def main():
         sheet_data = "Form Responses 1"
         date = str(st.sidebar.date_input("Select start date"))
         data = load_data_daywise1(sheet_id, sheet_data,date)
-        laptop_entries = Getdata_laptop_entries(date)
+        laptop_entries = Getdata_laptop_entries()
 
         st.title("Battery Out")
             # st.write("This app shows Hourly battery out today.")
