@@ -515,7 +515,7 @@ def Getdataformistakes(date):
     
     return df_filtered
 
-def Getdatafornamemistakes():
+def Getdatafornamemistakes(date):
     import pandas as pd
     import datetime as dt
     from datetime import datetime
@@ -587,7 +587,7 @@ def Getdatafornamemistakes():
     return df_filtered
 
 
-def Getdata_laptop_entries(date):
+def Getdata_laptop_entries():
     import pandas as pd
     import datetime as dt
     from pandas import Timestamp
