@@ -656,6 +656,8 @@ def main():
             # st.write("This app shows Hourly battery out today.")
 
         st.write(data)
+        
+        st.title("Laptop Entries")
         st.write(laptop_entries)
 #                            These lines of code can create button to fetch data 
         
