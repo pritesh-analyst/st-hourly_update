@@ -631,10 +631,10 @@ def Getdataentries(date):
 
     g4_swappings = print("Total G4 Swaappings :",data[ (data['Center'] == 'G4') & (data['Date'] == date)].shape[0])
     laptop_entries = print("Total Laptop Entries :",df1.loc[(df1['DATE'] == date) & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].count())
-
+    results = f"<p style='font-size: 24px;'>Total G4 Swappings: {g4_swappings}</p><br><p style='font-size: 24px;'>Total Laptop Entries: {laptop_entries}</p>"
     
         
-    return g4_swappings,laptop_entries
+    return results
     
 
 
@@ -658,7 +658,7 @@ def main():
         st.write(data)
         
         st.title("Laptop Entries")
-        st.write(laptop_entries)
+        st.write(laptop_entries,unsafe_allow_html=True)
 #                            These lines of code can create button to fetch data 
         
     # elif page == "Hourly Data":
