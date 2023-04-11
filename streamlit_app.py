@@ -585,8 +585,56 @@ def Getdatafornamemistakes(date):
     dataframeformistakes.sort_values(by='Battery in time',inplace=True)
     df_filtered=(dataframeformistakes[dataframeformistakes['Battery in time'].dt.strftime('%Y-%m-%d') == date]).reset_index(drop=True)
     return df_filtered
+
+
+def Getdata_laptop_entries(date):
+    import pandas as pd
+    import datetime as dt
+    from pandas import Timestamp
+    from datetime import datetime
+    import math
+    import warnings
+    warnings.filterwarnings('ignore')
+    sheet_id="1NikKhqY7u3AGsm9Fpk9UaqNFyzmyojuz8-iqUGh295g"
+    sheet_data="Form Responses 1"
+
+    gsheet_data = "https://docs.google.com/spreadsheets/d/{}/gviz/tq?tqx=out:csv&sheet={}".format(sheet_id, sheet_data)
+
+    url = gsheet_data.replace(" ","")
+    df=pd.read_csv(url, on_bad_lines='skip')
+    df=df.iloc[:,:22].fillna('')
+
+    df['Battery In Voltage']=pd.to_numeric(df['Battery In Voltage'])
+    df['Battery Out Voltage']=pd.to_numeric(df['Battery Out Voltage'])
+    df['Amount ']=pd.to_numeric(df['Amount '])
+
+
+    data=pd.DataFrame({
+                      'Timestamp':df['Timestamp'],'Customer name':df['Customer name'],'Battery_in':df['Battery In'],'Battery_in_volt':df['Battery In Voltage'],'Battery_out':df['Battery Out'],'Battery_Out_volt':df['Battery Out Voltage'],   
+                       'Amount':df['Amount '],'Security_amt':df['Security Amount'],'Penalty_amt':df['Penalty Amount '],'Supervisor':df['Shift supervisor'],'Plan':df['Is there any plan?'],
+                      'Battery_submit?':df['Is the customer submitting or collecting battery?'],'Center':df['Center']
+                       })
+
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Date'] = data['Timestamp'].dt.date
+    data['Date'] = pd.to_datetime(data['Date'])
+
+    sheet_id1="1gFlgJWIuyEjdR4xCaWB7aog4IYtP_62h9RMkcW6Zlpg"
+    sheet_data1="Form Responses 1"
+
+    gsheet_data1 = "https://docs.google.com/spreadsheets/d/{}/gviz/tq?tqx=out:csv&sheet={}".format(sheet_id1, sheet_data1)
+
+    url1 = gsheet_data1.replace(" ","")
+    df1=pd.read_csv(url1, on_bad_lines='skip')
+    df1["Timestamp"] = pd.to_datetime(df1["Timestamp"])
+    df1['DATE'] = pd.to_datetime(df1['DATE'])
+
+    g4_swappings = print("Total G4 Swaappings :",data[ (data['Center'] == 'G4') & (data['Date'] == date)].shape[0])
+    laptop_entries = print("Total Laptop Entries :",df1.loc[(df1['DATE'] == date) & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].count())
+
     
-    
+        
+    return g4_swappings,laptop_entries    
     
 
 
@@ -602,11 +650,13 @@ def main():
         sheet_data = "Form Responses 1"
         date = str(st.sidebar.date_input("Select start date"))
         data = load_data_daywise1(sheet_id, sheet_data,date)
+        laptop_entries = Getdata_laptop_entries(date)
 
         st.title("Battery Out")
             # st.write("This app shows Hourly battery out today.")
 
         st.write(data)
+        st.write(laptop_entries)
 #                            These lines of code can create button to fetch data 
         
     # elif page == "Hourly Data":
