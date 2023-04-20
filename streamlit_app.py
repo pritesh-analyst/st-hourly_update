@@ -642,6 +642,7 @@ def Getdataentries(date):
 #                                 """Main function starts from here """ 
 
 def main():
+    st.set_page_config(page_title="Model for hourly update", layout="wide")
     page = st.sidebar.selectbox("Select a page", ["Hourly Data","Entry Mistakes", "Swapping Distribution"])
     
     if page == "Hourly Data":
