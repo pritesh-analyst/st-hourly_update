@@ -35,7 +35,7 @@ def load_data(sheet_id, sheet_data):
     })
     
     today = datetime.today().date()
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
     filtered_data = data[data['Timestamp'].dt.date == today]
     filtered_data['hour'] = filtered_data['Timestamp'].dt.hour
     
@@ -196,7 +196,7 @@ def load_data_daywise(sheet_id, sheet_data,date):
     })
     
     today = datetime.today().date()
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
     filtered_data = data[data['Timestamp'].dt.strftime('%Y-%m-%d') == date]
     # df_filtered = df[df['date'].dt.strftime('%Y-%m-%d') == '2014-01-01']
     filtered_data['hour'] = filtered_data['Timestamp'].dt.hour
@@ -357,7 +357,7 @@ def load_data_daywise1(sheet_id, sheet_data,date):
     })
     
     today = datetime.today().date()
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
     filtered_data = data[data['Timestamp'].dt.strftime('%Y-%m-%d') == date]
     # df_filtered = df[df['date'].dt.strftime('%Y-%m-%d') == '2014-01-01']
     filtered_data['hour'] = filtered_data['Timestamp'].dt.hour
@@ -470,7 +470,7 @@ def Getdataformistakes(date):
                       'Battery_submit?':df['Is the customer submitting or collecting battery?'],'Center':df['Center']
                        })
    
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
     start_date = pd.Timestamp(dt.date.today().replace(day=1))
     end_date = pd.Timestamp(dt.date.today())
     
@@ -542,7 +542,7 @@ def Getdatafornamemistakes(date):
                       'Battery_submit?':df['Is the customer submitting or collecting battery?'],'Center':df['Center']
                        })
    
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
     start_date = pd.Timestamp(dt.date.today().replace(day=1))
     end_date = pd.Timestamp(dt.date.today())
     
@@ -615,7 +615,7 @@ def Getdataentries(date):
                       'Battery_submit?':df['Is the customer submitting or collecting battery?'],'Center':df['Center']
                        })
 
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
     data['Date'] = data['Timestamp'].dt.date
     data['Date'] = pd.to_datetime(data['Date'])
 
