@@ -196,7 +196,7 @@ def load_data_daywise(sheet_id, sheet_data,date):
     })
     
     today = datetime.today().date()
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'],dayfirst = True)
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
     filtered_data = data[data['Timestamp'].dt.strftime('%Y-%m-%d') == date]
     # df_filtered = df[df['date'].dt.strftime('%Y-%m-%d') == '2014-01-01']
     filtered_data['hour'] = filtered_data['Timestamp'].dt.hour
