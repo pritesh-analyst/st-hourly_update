@@ -632,7 +632,7 @@ def Getdataentries(date):
     g4_swappings = data[(data['Center'] == 'G4') & (data['Date'] == date) &  (data['Battery_out']!='') ].shape[0]
 
     laptop_entries = df1.loc[(df1['DATE'] == date) & df1['Battery Number SL (only write number, please do not write SL)']]['Battery Number SL (only write number, please do not write SL)'].nunique()
-    results = f"<p style='font-size: 24px;'>Total G4 Swappings: {g4_swappings}</p><br><p style='font-size: 24px;'>Total Laptop Entries: {laptop_entries}</p>"
+    results = f"<p style='font-size: 24px;'>Total G4 Swappings: {g4_swappings}  </p><br><p style='font-size: 24px;'>Total Unique Laptop Entries: {laptop_entries}</p>"
     
         
     return results
