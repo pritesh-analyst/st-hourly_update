@@ -735,6 +735,7 @@ def main():
         # substring = st.text_input("Filteration Key")
         # after_filteration = filtered_data[filtered_data.apply(lambda row: row.astype(str).str.contains(substring, case=False).any(), axis=1)]
         st.write(filtered_data)
+      
 
     
 
