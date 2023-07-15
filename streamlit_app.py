@@ -661,14 +661,17 @@ def Getdata(substring):
     return data
 
     
-
+def load_data_from_gsheets(sheet_id, sheet_name):
+    gsheet_data = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+    df = pd.read_csv(gsheet_data, on_bad_lines='skip')
+    return df    
 
 
 #                                 """Main function starts from here """ 
 
 def main():
     st.set_page_config(page_title="Model for hourly update", layout="wide")
-    page = st.sidebar.selectbox("Select a page", ["Hourly Data","Entry Mistakes","Filter_Data" ,"Swapping Distribution"])
+    page = st.sidebar.selectbox("Select a page", ["Hourly Data","Entry Mistakes","Filter_Data" ,"Customer Details","Swapping Distribution"])
     
     if page == "Hourly Data":
         # if st.sidebar.button("Load Hourly Data"):
@@ -734,6 +737,31 @@ def main():
 
         # substring = st.text_input("Filteration Key")
         # after_filteration = filtered_data[filtered_data.apply(lambda row: row.astype(str).str.contains(substring, case=False).any(), axis=1)]
+        st.write(filtered_data)
+
+    elif page == "Customer Details":
+        st.title('Customer Details')
+
+        try:
+            df = load_data_from_gsheets("1LRowcbNlBM0RS-KctUFYDEDzA4UIoY6EGbQU1WS4WHU", "Mastersheet")
+        except Exception as e:
+            st.error(f"Error occurred while loading data: {str(e)}")
+            st.stop()
+
+        data = df[['Customer registered as','File number','Erick number','Customer contact','Wife contact','File Charge (INR)','Deposit  (INR)',
+                'Swapping agreement', 'Adahar', 'RC', 'PAN','Blank Cheque', 'Current address proof', 'Gurantor', 'Verification',
+                'Pass book copy', 'Sales certificate', 'Meter','Status']]
+
+    # data = data.replace({False: "We don't have", True: "We have"})
+        data = data.fillna("")  # Replace NaN values with empty string
+
+        unique_entries = []
+        unique_entries.insert(0,"")
+        for col in data.select_dtypes(include='object').columns:
+            unique_entries += data[col].unique().tolist()
+        selected_entry = st.selectbox("Select entry", options=unique_entries)
+        filtered_data = data[data.apply(lambda row: any(str(col).lower() == selected_entry.lower() for col in row), axis=1)]
+    
         st.write(filtered_data)
       
 
