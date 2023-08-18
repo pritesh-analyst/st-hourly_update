@@ -664,7 +664,7 @@ def load_data_from_gsheets(sheet_id, sheet_name):
 
 #                                 """Main function starts from here """ 
 
-#def main():
+def main():
     st.set_page_config(page_title="Model for hourly update", layout="wide")
     page = st.sidebar.selectbox("Select a page", ["Hourly Data","Entry Mistakes","Filter_Data" ,"Customer Details","Swapping Distribution"])
     
